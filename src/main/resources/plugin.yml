@@ -1,0 +1,7 @@
+name: EvilPunishments
+version: 1.0
+authors: [EvilBlock, joeleoli]
+description: Cross-server player punishments
+main: net.evilblock.punishments.EvilPunishments
+depend:
+  - Cubed
