@@ -1,4 +1,4 @@
-package net.evilblock.punishments.user.command
+package net.evilblock.punishments.user.command.parameter
 
 import net.evilblock.cubed.Cubed
 import net.evilblock.cubed.command.data.parameter.ParameterType

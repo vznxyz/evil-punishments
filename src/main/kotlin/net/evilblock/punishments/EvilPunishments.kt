@@ -7,7 +7,8 @@ import net.evilblock.pidgin.Pidgin
 import net.evilblock.pidgin.PidginOptions
 import net.evilblock.punishments.database.impl.MongoDatabase
 import net.evilblock.punishments.user.User
-import net.evilblock.punishments.user.command.UserParameterType
+import net.evilblock.punishments.user.command.AltsCommand
+import net.evilblock.punishments.user.command.parameter.UserParameterType
 import net.evilblock.punishments.user.listener.UserListeners
 import net.evilblock.punishments.user.message.UserMessageListeners
 import net.evilblock.punishments.user.punishment.command.ban.BanCommand
@@ -49,7 +50,9 @@ class EvilPunishments : JavaPlugin() {
     }
 
     private fun loadCommands() {
-        CommandHandler.registerParameterType(User::class.java, UserParameterType())
+        CommandHandler.registerParameterType(User::class.java,
+            UserParameterType()
+        )
 
         CommandHandler.registerClass(BlacklistCommand.javaClass)
         CommandHandler.registerClass(UnblacklistCommand.javaClass)
@@ -63,6 +66,8 @@ class EvilPunishments : JavaPlugin() {
         CommandHandler.registerClass(UnmuteCommand.javaClass)
 
         CommandHandler.registerClass(WarnCommand.javaClass)
+
+        CommandHandler.registerClass(AltsCommand.javaClass)
 
         CommandHandler.registerClass(CheckCommand.javaClass)
         CommandHandler.registerClass(StaffHistoryCommand.javaClass)
