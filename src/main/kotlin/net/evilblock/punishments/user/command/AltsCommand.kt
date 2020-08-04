@@ -3,6 +3,7 @@ package net.evilblock.punishments.user.command
 import net.evilblock.cubed.Cubed
 import net.evilblock.cubed.command.Command
 import net.evilblock.cubed.command.data.parameter.Param
+import net.evilblock.cubed.util.TextSplitter
 import net.evilblock.punishments.EvilPunishments
 import net.evilblock.punishments.user.User
 import net.evilblock.punishments.user.UserHandler
@@ -10,7 +11,6 @@ import net.evilblock.punishments.user.punishment.PunishmentType
 import net.evilblock.punishments.util.Permissions
 import org.bukkit.ChatColor
 import org.bukkit.command.CommandSender
-import org.bukkit.entity.Player
 
 object AltsCommand {
 
@@ -22,10 +22,10 @@ object AltsCommand {
     )
     @JvmStatic
     fun execute(sender: CommandSender, @Param(name = "player") user: User) {
-        var foundAlts = EvilPunishments.instance.database.fetchAltAccounts(user)
-
-        if (sender is Player) {
-            foundAlts = foundAlts.filter { it != sender.uniqueId }
+        val foundAlts = EvilPunishments.instance.database.fetchAltAccounts(user).filter { it != user.uuid }
+        if (foundAlts.isEmpty()) {
+            sender.sendMessage("${ChatColor.RED}No alts found for ${user.getUsername()}!")
+            return
         }
 
         val renderedNames = foundAlts.joinToString(separator = "${ChatColor.GRAY}, ") { altUuid ->
@@ -46,7 +46,20 @@ object AltsCommand {
             Cubed.instance.uuidCache.name(altUuid)
         }
 
-        sender.sendMessage("${ChatColor.YELLOW}Alts of ${user.getUsername()}: ${ChatColor.GRAY}$renderedNames")
+        if (renderedNames.length < 4000) {
+            sender.sendMessage("${ChatColor.YELLOW}Alts of ${user.getUsername()} ${ChatColor.BOLD}(${foundAlts.size}): ${ChatColor.GRAY}$renderedNames")
+        } else {
+            var first = true
+            for (message in TextSplitter.split(length = 4000, text = renderedNames)) {
+                if (first) {
+                    sender.sendMessage("${ChatColor.YELLOW}Alts of ${user.getUsername()} ${ChatColor.BOLD}(${foundAlts.size}): ${ChatColor.GRAY}$message")
+                } else {
+                    sender.sendMessage("${ChatColor.GRAY}$message")
+                }
+
+                first = false
+            }
+        }
     }
 
 }
