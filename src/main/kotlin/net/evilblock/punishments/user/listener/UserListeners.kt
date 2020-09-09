@@ -40,7 +40,7 @@ object UserListeners : Listener {
                 var kickMessage = if (punishment.second.punishmentType == PunishmentType.BAN) {
                     "${ChatColor.RED}Your account has been suspended from MineJunkie.\nCreate a support ticket on our site to appeal."
                 } else {
-                    "${ChatColor.RED}Your account has been blacklisted from MineJunkie.\nThis type of appeal can't be appealed."
+                    "${ChatColor.RED}Your account has been blacklisted from MineJunkie.\nThis type of punishment can't be appealed."
                 }
 
                 if (event.uniqueId != punishment.first) {

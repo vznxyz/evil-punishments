@@ -25,6 +25,6 @@ object Permissions {
     const val WARN_REMOVE = "punishments.warn.remove"
     const val WARN_VIEW = "punishments.warn.view"
 
-    const val ALTS_VIEW = "alts.view"
+    const val ALTS_VIEW = "punishments.alts.view"
 
 }
