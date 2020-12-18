@@ -39,6 +39,7 @@ object UnmuteCommand {
             return
         }
 
+        activePunishment.removed = true
         activePunishment.removedBy = issuer
         activePunishment.removedAt = System.currentTimeMillis()
         activePunishment.removalReason = reason

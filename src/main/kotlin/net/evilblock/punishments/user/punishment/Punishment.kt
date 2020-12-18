@@ -11,12 +11,13 @@ class Punishment(val uuid: UUID = UUID.randomUUID(), val punishmentType: Punishm
     val issuedAt: Long = System.currentTimeMillis()
     var expiresAt: Long? = null
 
+    var removed: Boolean = false
     var removalReason: String? = null
     var removedBy: UUID? = null
     var removedAt: Long? = null
 
     fun isActive(): Boolean {
-        return removedAt == null && (expiresAt == null || System.currentTimeMillis() < expiresAt!!)
+        return !removed && (expiresAt == null || System.currentTimeMillis() < expiresAt!!)
     }
 
     fun isPermanent(): Boolean {

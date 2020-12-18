@@ -42,10 +42,9 @@ dependencies {
     compileOnly 'org.mongodb:mongodb-driver:3.10.2'
     implementation 'com.squareup.okhttp:okhttp:2.7.5'
     implementation 'net.evilblock:pidgin:1.1'
-    compileOnly 'net.evilblocke:cubed:1.1'
+    compileOnly 'net.evilblock:cubed:1.1'
     compileOnly 'org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT'
     compileOnly 'org.bukkit:bukkit:1.12.2-R0.1-SNAPSHOT'
-    compileOnly fileTree(dir: 'lib', include: '*.jar')
 }
 
 compileKotlin {
@@ -80,5 +79,6 @@ processResources {
 
 tasks.withType(Jar) {
     def home = System.properties['user.home']
-    destinationDirectory = file("$home/Desktop/@MineJunkie DEV/shared/global")
+//    destinationDirectory = file("$home/Desktop/@MineJunkie DEV/Prison/plugins")
+    destinationDirectory = file("$home/Desktop/@MineJunkie DEV/shared")
 }

@@ -90,6 +90,11 @@ object UserListeners : Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     fun onAsyncPlayerChatEventLow(event: AsyncPlayerChatEvent) {
         val user = UserHandler.getUser(event.player.uniqueId)
+        if (user == null) {
+            event.isCancelled = true
+            event.player.sendMessage("${ChatColor.RED}You can't chat because your punishments data hasn't been loaded!")
+            return
+        }
 
         val activeMute = user.getActivePunishment(PunishmentType.MUTE)
         if (activeMute != null) {
@@ -107,7 +112,9 @@ object UserListeners : Listener {
 
     @EventHandler
     fun onPlayerQuitEvent(event: PlayerQuitEvent) {
-        UserHandler.forgetUser(UserHandler.getUser(event.player.uniqueId))
+        UserHandler.getUser(event.player.uniqueId)?.let {
+            UserHandler.forgetUser(it)
+        }
     }
 
 }

@@ -32,4 +32,8 @@ interface Database {
      */
     fun fetchPunishmentsIssuedBy(uuid: UUID): List<IssuedByQueryResult>
 
+    fun performMigrations() {
+
+    }
+
 }

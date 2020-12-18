@@ -39,7 +39,7 @@ object UserMessageListeners : MessageListener {
     private fun executePunishment(punishedUser: User, punishment: Punishment, silent: Boolean) {
         val punishedUsername = punishedUser.getUsername()
 
-        val issuerName: String = if (punishment.removedAt != null) {
+        val issuerName: String = if (punishment.removed) {
             if (punishment.removedBy == null) {
                 "${ChatColor.DARK_RED}Console"
             } else {

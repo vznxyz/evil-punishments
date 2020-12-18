@@ -3,6 +3,7 @@ package net.evilblock.punishments.database.impl
 import com.mongodb.client.MongoCollection
 import com.mongodb.client.model.ReplaceOptions
 import net.evilblock.cubed.Cubed
+import net.evilblock.punishments.EvilPunishments
 import net.evilblock.punishments.database.Database
 import net.evilblock.punishments.database.result.IssuedByQueryResult
 import net.evilblock.punishments.user.User
@@ -98,6 +99,25 @@ class MongoDatabase : Database {
         }
 
         return punishments
+    }
+
+    override fun performMigrations() {
+        var migrated = 0
+        for (document in usersCollection.find()) {
+            val user = Cubed.gson.fromJson(document.toJson(JSON_WRITER_SETTINGS), User::class.java)
+            user.firstSeen = System.currentTimeMillis()
+
+            for (punishment in user.getPunishments()) {
+                if (!punishment.removed && punishment.removedAt != null) {
+                    punishment.removed = true
+                }
+            }
+
+            migrated++
+            saveUser(user)
+        }
+
+        EvilPunishments.instance.logger.info("Finished performing migrations ($migrated migrated)")
     }
 
     companion object {

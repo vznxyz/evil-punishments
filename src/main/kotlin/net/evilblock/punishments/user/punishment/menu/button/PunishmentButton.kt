@@ -4,7 +4,7 @@ import net.evilblock.cubed.Cubed
 import net.evilblock.cubed.menu.Button
 import net.evilblock.cubed.util.TimeUtil
 import net.evilblock.cubed.util.bukkit.Tasks
-import net.evilblock.cubed.util.bukkit.prompt.EzPrompt
+import net.evilblock.cubed.util.bukkit.prompt.InputPrompt
 import net.evilblock.pidgin.message.Message
 import net.evilblock.punishments.EvilPunishments
 import net.evilblock.punishments.user.User
@@ -57,7 +57,7 @@ class PunishmentButton(
                 description.add(BAR)
                 description.add("${ChatColor.YELLOW}Click to remove this punishment.")
             }
-        } else if (punishment.removedAt != null) {
+        } else if (punishment.removed) {
             val removedBy = if (punishment.removedBy == null) {
                 "Console"
             } else {
@@ -90,15 +90,16 @@ class PunishmentButton(
     }
 
     override fun clicked(player: Player, slot: Int, clickType: ClickType, view: InventoryView) {
-        if (punishment.removedAt == null) {
-            EzPrompt.Builder()
-                .promptText("${ChatColor.GREEN}Please specify a valid reason.")
-                .acceptInput { player, input ->
+        if (!punishment.removed) {
+            InputPrompt()
+                .withText("${ChatColor.GREEN}Please specify a valid reason.")
+                .acceptInput { input ->
                     if (input.equals("cancel", ignoreCase = true)) {
                         player.sendMessage("${ChatColor.YELLOW}Cancelled procedure.")
                         return@acceptInput
                     }
 
+                    punishment.removed = true
                     punishment.removedBy = player.uniqueId
                     punishment.removedAt = System.currentTimeMillis()
                     punishment.removalReason = input
@@ -117,7 +118,6 @@ class PunishmentButton(
 
                     player.sendMessage("${ChatColor.GOLD}Punishment removed.")
                 }
-                .build()
                 .start(player)
         }
     }

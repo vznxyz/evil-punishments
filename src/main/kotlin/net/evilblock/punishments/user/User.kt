@@ -9,6 +9,8 @@ import kotlin.collections.HashSet
 
 class User(val uuid: UUID) {
 
+    var firstSeen: Long = System.currentTimeMillis()
+
     private var punishments: MutableList<Punishment> = ArrayList()
     private var ipAddresses: MutableSet<String> = HashSet()
 

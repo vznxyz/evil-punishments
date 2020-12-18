@@ -14,8 +14,8 @@ object UserHandler {
         return loadedUsers.containsKey(uuid)
     }
 
-    fun getUser(uuid: UUID): User {
-        return loadedUsers[uuid]!!
+    fun getUser(uuid: UUID): User? {
+        return loadedUsers[uuid]
     }
 
     fun cacheUser(user: User) {
