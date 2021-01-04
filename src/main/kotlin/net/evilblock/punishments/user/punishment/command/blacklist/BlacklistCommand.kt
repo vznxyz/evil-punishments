@@ -35,7 +35,7 @@ object BlacklistCommand {
         }
 
         if (user.getActivePunishment(PunishmentType.BLACKLIST) != null) {
-            sender.sendMessage("${user.getUsername()} ${ChatColor.RED}is already blacklisted.")
+            sender.sendMessage("${user.getUsername()} ${ChatColor.RED}is already blacklisted!")
             return
         }
 

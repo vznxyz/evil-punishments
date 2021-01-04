@@ -34,7 +34,7 @@ object UnbanCommand {
 
         val activePunishment = user.getActivePunishment(PunishmentType.BAN)
         if (activePunishment == null) {
-            sender.sendMessage("${user.getUsername()} ${ChatColor.RED}is not banned.")
+            sender.sendMessage("${user.getUsername()} ${ChatColor.RED}is not banned!")
             return
         }
 

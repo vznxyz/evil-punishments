@@ -3,7 +3,6 @@ package net.evilblock.punishments.database.impl
 import com.mongodb.client.MongoCollection
 import com.mongodb.client.model.ReplaceOptions
 import net.evilblock.cubed.Cubed
-import net.evilblock.punishments.EvilPunishments
 import net.evilblock.punishments.database.Database
 import net.evilblock.punishments.database.result.IssuedByQueryResult
 import net.evilblock.punishments.user.User
@@ -22,6 +21,10 @@ class MongoDatabase : Database {
     init {
         usersCollection.createIndex(Document("uuid", 1))
         usersCollection.createIndex(Document("ipAddress", 1))
+    }
+
+    fun getCollection(): MongoCollection<Document> {
+        return usersCollection
     }
 
     override fun fetchUser(uuid: UUID, create: Boolean): User? {
@@ -55,7 +58,7 @@ class MongoDatabase : Database {
         for (matchingDocument in usersCollection.find(Document("\$or", orExpressions))) {
             val user = Cubed.gson.fromJson(matchingDocument.toJson(JSON_WRITER_SETTINGS), User::class.java)
             for (punishment in user.getPunishments()) {
-                if (punishment.punishmentType == PunishmentType.BLACKLIST || punishment.punishmentType == PunishmentType.BAN) {
+                if (punishment.punishmentType == PunishmentType.BLACKLIST) {
                     if (punishment.isActive()) {
                         return Pair(UUID.fromString(matchingDocument.getString("uuid")), punishment)
                     }
@@ -102,22 +105,22 @@ class MongoDatabase : Database {
     }
 
     override fun performMigrations() {
-        var migrated = 0
-        for (document in usersCollection.find()) {
-            val user = Cubed.gson.fromJson(document.toJson(JSON_WRITER_SETTINGS), User::class.java)
-            user.firstSeen = System.currentTimeMillis()
-
-            for (punishment in user.getPunishments()) {
-                if (!punishment.removed && punishment.removedAt != null) {
-                    punishment.removed = true
-                }
-            }
-
-            migrated++
-            saveUser(user)
-        }
-
-        EvilPunishments.instance.logger.info("Finished performing migrations ($migrated migrated)")
+//        var migrated = 0
+//        for (document in usersCollection.find()) {
+//            val user = Cubed.gson.fromJson(document.toJson(JSON_WRITER_SETTINGS), User::class.java)
+//            user.firstSeen = System.currentTimeMillis()
+//
+//            for (punishment in user.getPunishments()) {
+//                if (!punishment.removed && punishment.removedAt != null) {
+//                    punishment.removed = true
+//                }
+//            }
+//
+//            migrated++
+//            saveUser(user)
+//        }
+//
+//        EvilPunishments.instance.logger.info("Finished performing migrations ($migrated migrated)")
     }
 
     companion object {

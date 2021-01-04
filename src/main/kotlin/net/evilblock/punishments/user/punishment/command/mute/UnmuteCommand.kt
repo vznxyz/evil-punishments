@@ -35,7 +35,7 @@ object UnmuteCommand {
 
         val activePunishment = user.getActivePunishment(PunishmentType.MUTE)
         if (activePunishment == null) {
-            sender.sendMessage("${user.getUsername()} ${ChatColor.RED}is not muted.")
+            sender.sendMessage("${user.getUsername()} ${ChatColor.RED}is not muted!")
             return
         }
 

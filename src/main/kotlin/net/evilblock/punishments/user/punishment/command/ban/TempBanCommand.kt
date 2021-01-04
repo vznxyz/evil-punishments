@@ -37,7 +37,7 @@ object TempBanCommand {
         }
 
         if (user.getActivePunishment(PunishmentType.BAN) != null) {
-            sender.sendMessage("${user.getUsername()} ${ChatColor.RED}is already banned.")
+            sender.sendMessage("${user.getUsername()} ${ChatColor.RED}is already banned!")
             return
         }
 

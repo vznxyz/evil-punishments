@@ -35,7 +35,7 @@ object UnblacklistCommand {
 
         val activePunishment = user.getActivePunishment(PunishmentType.BLACKLIST)
         if (activePunishment == null) {
-            sender.sendMessage("${user.getUsername()} ${ChatColor.RED}is not blacklisted.")
+            sender.sendMessage("${user.getUsername()} ${ChatColor.RED}is not blacklisted!")
             return
         }
 

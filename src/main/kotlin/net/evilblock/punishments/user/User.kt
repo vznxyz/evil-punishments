@@ -47,6 +47,10 @@ class User(val uuid: UUID) {
         punishments.add(punishment)
     }
 
+    fun removePunishment(punishment: Punishment) {
+        punishments.remove(punishment)
+    }
+
     /**
      * Returns a list of the user's [ipAddresses].
      */

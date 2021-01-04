@@ -6,6 +6,7 @@ import net.evilblock.cubed.command.CommandHandler
 import net.evilblock.pidgin.Pidgin
 import net.evilblock.pidgin.PidginOptions
 import net.evilblock.punishments.command.MigrateCommand
+import net.evilblock.punishments.command.ResetBansCommand
 import net.evilblock.punishments.database.impl.MongoDatabase
 import net.evilblock.punishments.user.User
 import net.evilblock.punishments.user.command.AltsCommand
@@ -51,11 +52,10 @@ class EvilPunishments : JavaPlugin() {
     }
 
     private fun loadCommands() {
-        CommandHandler.registerParameterType(User::class.java,
-            UserParameterType()
-        )
+        CommandHandler.registerParameterType(User::class.java, UserParameterType())
 
         CommandHandler.registerClass(MigrateCommand.javaClass)
+        CommandHandler.registerClass(ResetBansCommand.javaClass)
 
         CommandHandler.registerClass(BlacklistCommand.javaClass)
         CommandHandler.registerClass(UnblacklistCommand.javaClass)

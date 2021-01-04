@@ -37,7 +37,7 @@ object TempMuteCommand {
         }
 
         if (user.getActivePunishment(PunishmentType.MUTE) != null) {
-            sender.sendMessage("${user.getUsername()} ${ChatColor.RED}is already muted.")
+            sender.sendMessage("${user.getUsername()} ${ChatColor.RED}is already muted!")
             return
         }
 

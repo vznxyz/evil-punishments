@@ -1,5 +1,6 @@
 package net.evilblock.punishments.user
 
+import org.bukkit.Bukkit
 import java.util.*
 
 object UserHandler {
@@ -24,6 +25,19 @@ object UserHandler {
 
     fun forgetUser(user: User) {
         loadedUsers.remove(user.uuid)
+    }
+
+    fun canPunish(executor: User, punished: User): Boolean {
+        val executorPlayer = Bukkit.getOfflinePlayer(executor.uuid)
+        val punishedPlayer = Bukkit.getOfflinePlayer(punished.uuid)
+
+        if (executorPlayer != null && punishedPlayer != null) {
+            if (punishedPlayer.isOp && !executorPlayer.isOp) {
+                return false
+            }
+        }
+
+        return true
     }
 
 }
